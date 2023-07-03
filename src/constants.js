@@ -1,29 +1,6 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
+export const IMG_CDN_URL = "https://res.cloudinary.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_508,h_320,c_fill/";
 
-const Title = () => (
-    <a href="/">
-        <img className='logo' alt="Logo" src='https://www.creativefabrica.com/wp-content/uploads/2018/10/Fast-Delivery-food-logo-by-DEEMKA-STUDIO-580x406.jpg' />
-    </a>
-);
-
-// Composing Components
-
-const Header = () => (
-    <div className='header'>
-        <Title />
-        <div className='nav-items'>
-            <ul>
-                <li>Home</li>
-                <li>About</li>
-                <li>Contact</li>
-                <li>Cart</li>
-            </ul>
-        </div>
-    </div>
-);
-
-const restaurantList = [
+export const restaurantList = [
     {
         "type": "restaurant",
         "data": {
@@ -1815,50 +1792,4 @@ const restaurantList = [
         "subtype": "basic"
     }
 ]
-const RestaurantCard = ({
-    name,
-    cloudinaryImageId,
-    cuisines,
-    deliveryTime
-}) => {
-    return (
-        <div className='card'>
-            <img src={"https://res.cloudinary.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_508,h_320,c_fill/"
-                + cloudinaryImageId} />
-            <h2>{name}</h2>
-            <h3>{cuisines.join(", ")}</h3>
-            <h4>{deliveryTime} minutes</h4>
-        </div>
-    )
-}
 
-const Body = () => {
-    return (
-        <div className='restaurant-list'>
-            {
-                restaurantList.map((restaurant) => {
-                    return <RestaurantCard {...restaurant.data} key={restaurant.data.id}/>;
-                })}
-        </div>
-    )
-}
-
-const Footer = () => {
-    return (
-        <h4>Footer</h4>
-    )
-}
-
-const AppLayout = () => {
-    return (
-        <React.Fragment>
-            <Header />
-            <Body />
-            <Footer />
-        </React.Fragment>
-    );
-}
-
-const root = ReactDOM.createRoot(document.getElementById("root"));
-
-root.render(<AppLayout />);
