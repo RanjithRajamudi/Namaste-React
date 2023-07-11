@@ -33,3 +33,10 @@
     display: flex;
     flex-wrap: wrap;
 }
+
+.shimmmer-card {
+    width: 200px;
+    height: 200px;
+    background: grey;
+    margin: 20px;
+}
