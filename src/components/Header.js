@@ -1,16 +1,16 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import Logo from '../assets/images/Logo.jpg'
 
 const Title = () => (
     <a href="/">
         <img
             className='logo'
             alt="Logo"
-            src='https://www.creativefabrica.com/wp-content/uploads/2018/10/Fast-Delivery-food-logo-by-DEEMKA-STUDIO-580x406.jpg'
+            src={Logo}
         />
     </a>
 );
-
 
 const Header = () => {
 
@@ -23,7 +23,8 @@ const Header = () => {
                     <li><Link to="/">Home</Link></li>
                     <li><Link to="/about">About</Link></li>
                     <li><Link to="/contact">Contact</Link></li>
-                    <li>Cart</li>
+                    <li><Link to="/instamart">Instamart</Link></li>
+                    <li><Link to="">Cart</Link></li>
                 </ul>
             </div>
 
