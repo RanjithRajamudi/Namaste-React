@@ -1,15 +1,17 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import RestaurantCard from './RestaurantCard';
 import Shimmer from './Shimmer'
 import { Link } from "react-router-dom";
 import filterData from '../utils/helper'
 import useGetOnline from '../utils/useGetOnline';
+import UserContext from '../utils/UserContext';
 
 
 const Body = () => {
     const [allRestaurants, setAllRestaurants] = useState([]);
     const [filteredRestaurants, setFilteredRestaurants] = useState([]);
     const [searchText, setSearchText] = useState("");
+    const { user, setUser } = useContext(UserContext);
 
     useEffect(() => {
         getRestaurants();
@@ -25,7 +27,7 @@ const Body = () => {
 
     const online = useGetOnline();
 
-    if(!online) {
+    if (!online) {
         return <h1> Offline, Please check the internet connection...!</h1>
     }
 
@@ -45,6 +47,7 @@ const Body = () => {
                     const data = filterData(searchText, allRestaurants);
                     setFilteredRestaurants(data)
                 }}>Search</button>
+                <input value={user.name} onChange={(e) => setUser({ name: e.target.value, email: e.target.name })}></input>
             </div>
             <div className='flex flex-wrap'>
                 {
