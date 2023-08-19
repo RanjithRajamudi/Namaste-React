@@ -7,9 +7,12 @@ import Error from './components/Error';
 import Contact from './components/Contact';
 import Profile from './components/Profile';
 import RestaurantMenu from './components/RestaurantMenu';
+import Cart from './components/Cart';
 import Shimmer from './components/Shimmer';
 import { createBrowserRouter, Outlet, RouterProvider } from 'react-router-dom';
 import UserContext from './utils/UserContext';
+import { Provider } from 'react-redux';
+import store from './utils/store';
 
 // Chunking
 // Code Splitting
@@ -27,13 +30,13 @@ const AppLayout = () => {
         email: 'test@dev.com'
     })
     return (
-        <>
+        <Provider store={store}>
             <UserContext.Provider value={{ user: user, setUser: setUser }}>
                 <Header />
                 <Outlet />
                 <Footer />
             </UserContext.Provider>
-        </>
+        </Provider>
     );
 }
 
@@ -75,6 +78,10 @@ const appRouter = createBrowserRouter([
                         <Instamart />
                     </Suspense>
                 ),
+            },
+            {
+                path: '/cart',
+                element: <Cart />
             }
         ]
     },

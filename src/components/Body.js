@@ -9,7 +9,7 @@ import UserContext from '../utils/UserContext';
 
 const Body = () => {
     const [allRestaurants, setAllRestaurants] = useState([]);
-    const [filteredRestaurants, setFilteredRestaurants] = useState([]);
+    const [filteredRestaurants, setFilteredRestaurants] = useState(null);
     const [searchText, setSearchText] = useState("");
     const { user, setUser } = useContext(UserContext);
 
@@ -18,10 +18,10 @@ const Body = () => {
     }, [])
 
     async function getRestaurants() {
-        const data = await fetch("https://www.swiggy.com/dapi/restaurants/list/v5?lat=12.9432474&lng=77.56298079999999&page_type=DESKTOP_WEB_LISTING");
+        const data = await fetch("https://www.swiggy.com/dapi/restaurants/list/v5?lat=12.9432474&lng=77.56298079999999&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING");
         const json = await data.json();
-        setAllRestaurants(json?.data?.cards[2]?.data?.data?.cards);
-        setFilteredRestaurants(json?.data?.cards[2]?.data?.data?.cards);
+        setAllRestaurants(json?.data?.cards[2]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
+        setFilteredRestaurants(json?.data?.cards[2]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
         console.log(json)
     }
 
@@ -43,18 +43,19 @@ const Body = () => {
                     placeholder='Search'
                     value={searchText}
                     onChange={(e) => setSearchText(e.target.value)} />
-                <button className='p-2 mx-2 bg-slate-400 hover:bg-amber-600 rounded-md' onClick={() => {
-                    const data = filterData(searchText, allRestaurants);
-                    setFilteredRestaurants(data)
-                }}>Search</button>
+                <button className='p-2 mx-2 bg-slate-400 hover:bg-amber-600 rounded-md'
+                    onClick={() => {
+                        const data = filterData(searchText, allRestaurants);
+                        setFilteredRestaurants(data)
+                    }}>Search</button>
                 <input value={user.name} onChange={(e) => setUser({ name: e.target.value, email: e.target.name })}></input>
             </div>
             <div className='flex flex-wrap'>
                 {
                     filteredRestaurants.map((restaurant) => {
                         return (
-                            <Link to={"/restaurant/" + restaurant.data.id} key={restaurant.data.id}>
-                                <RestaurantCard {...restaurant.data} key={restaurant.data.id} />
+                            <Link to={"/restaurant/" + restaurant.info.id} key={restaurant?.info.id}>
+                                <RestaurantCard {...restaurant?.info} key={restaurant?.info.id} />
                             </Link>
                         )
                     })}
