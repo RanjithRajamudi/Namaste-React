@@ -31,7 +31,7 @@ const RestaurantMenu = () => {
             </div>
             <div className='p-5'>
                 <h1>Menu</h1>
-                <ul>
+                <ul data-testid="menu">
                     {Object.values(restaurant?.cards[2]?.groupedCard?.cardGroupMap?.REGULAR?.cards[2]?.card?.card?.itemCards).map((item) => (
                         <div className='flex mb-1'>
                             <li className='flex justify-between' key={item?.card?.info?.id}>
@@ -40,6 +40,7 @@ const RestaurantMenu = () => {
                                     onClick={() => handleRemoveItem(item)}>removeItem</button>
                                 <div>{item?.card?.info?.name}</div>
                                 <button
+                                    data-testid='addBtn'
                                     className='border border-black bg-green-400 rounded-md p-1'
                                     onClick={() => handleAddItem(item)}>addItem</button></li>
 

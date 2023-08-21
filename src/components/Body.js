@@ -2,7 +2,7 @@ import { useEffect, useState, useContext } from 'react';
 import RestaurantCard from './RestaurantCard';
 import Shimmer from './Shimmer'
 import { Link } from "react-router-dom";
-import filterData from '../utils/helper'
+import { filterData } from '../utils/helper'
 import useGetOnline from '../utils/useGetOnline';
 import UserContext from '../utils/UserContext';
 
@@ -22,7 +22,6 @@ const Body = () => {
         const json = await data.json();
         setAllRestaurants(json?.data?.cards[2]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
         setFilteredRestaurants(json?.data?.cards[2]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
-        console.log(json)
     }
 
     const online = useGetOnline();
@@ -38,19 +37,20 @@ const Body = () => {
         <>
             <div className="p-5 bg-pink-50 my-5">
                 <input
+                    data-testid="search-input"
                     type='text'
                     className='border border-black rounded-md focus:bg-green-300 p-2 m-2'
                     placeholder='Search'
                     value={searchText}
                     onChange={(e) => setSearchText(e.target.value)} />
-                <button className='p-2 mx-2 bg-slate-400 hover:bg-amber-600 rounded-md'
+                <button data-testid="search-btn" className='p-2 mx-2 bg-slate-400 hover:bg-amber-600 rounded-md'
                     onClick={() => {
                         const data = filterData(searchText, allRestaurants);
                         setFilteredRestaurants(data)
                     }}>Search</button>
                 <input value={user.name} onChange={(e) => setUser({ name: e.target.value, email: e.target.name })}></input>
             </div>
-            <div className='flex flex-wrap'>
+            <div className='flex flex-wrap' data-testid="res-list">
                 {
                     filteredRestaurants.map((restaurant) => {
                         return (
